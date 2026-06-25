@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stanimir Dimitrov | QA Automation Engineer</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+
+  <!-- ─── NAVIGATION ─────────────────────────────────────── -->
+  <nav id="navbar">
+    <div class="nav-logo">SD<span class="accent">.</span></div>
+    <ul class="nav-links">
+      <li><a href="#about" data-i18n="nav_about">About</a></li>
+      <li><a href="#skills" data-i18n="nav_skills">Skills</a></li>
+      <li><a href="#services" data-i18n="nav_services">Services</a></li>
+      <li><a href="#projects" data-i18n="nav_projects">Projects</a></li>
+      <li><a href="#contact" class="btn-nav" data-i18n="nav_contact">Contact</a></li>
+    </ul>
+    <div class="lang-switcher">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="fr">FR</button>
+      <button class="lang-btn" data-lang="bg">BG</button>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- ─── HERO ───────────────────────────────────────────── -->
+  <section id="hero">
+    <div class="hero-content">
+      <p class="hero-greeting mono" data-i18n="hero_greeting">Hi, my name is</p>
+      <h1 class="hero-name">Stanimir Dimitrov<span class="accent">.</span></h1>
+      <h2 class="hero-title" data-i18n="hero_title">QA Automation Engineer</h2>
+      <p class="hero-desc" data-i18n="hero_desc">
+        I build reliable, scalable test automation frameworks that catch bugs
+        before they reach production. Passionate about quality, clean code, and
+        continuous delivery.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary" data-i18n="hero_cta_work">View My Work</a>
+        <a href="#contact" class="btn btn-outline" data-i18n="hero_cta_contact">Get In Touch</a>
+      </div>
+    </div>
+    <div class="hero-terminal" aria-hidden="true">
+      <div class="terminal-header">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+        <span class="terminal-title">qa_engineer.py</span>
+      </div>
+      <div class="terminal-body mono">
+        <span class="t-comment"># Skills snapshot</span><br/>
+        <span class="t-keyword">def</span> <span class="t-fn">get_skills</span>():<br/>
+        &nbsp;&nbsp;<span class="t-keyword">return</span> {<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"automation"</span>: [<span class="t-str">"Selenium"</span>, <span class="t-str">"Playwright"</span>, <span class="t-str">"Cypress"</span>],<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"languages"</span>: [<span class="t-str">"Python"</span>, <span class="t-str">"TypeScript"</span>],<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"ci_cd"</span>: [<span class="t-str">"GitHub Actions"</span>, <span class="t-str">"Jenkins"</span>],<br/>
+        &nbsp;&nbsp;}<br/><br/>
+        <span class="t-comment"># All tests passing ✓</span><br/>
+        <span class="cursor">█</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ABOUT ──────────────────────────────────────────── -->
+  <section id="about">
+    <div class="section-inner">
+      <h2 class="section-title"><span class="accent mono">01.</span> <span data-i18n="about_title">About Me</span></h2>
+      <div class="about-grid">
+        <div class="about-text">
+          <p data-i18n="about_p1">
+            I'm a QA Automation Engineer with a strong focus on building end-to-end
+            test suites that scale with the product. I enjoy bridging the gap between
+            development and quality assurance through automation, clear processes, and
+            a detail-oriented mindset.
+          </p>
+          <p data-i18n="about_p2">
+            When I'm not hunting bugs, I'm exploring new testing tools, contributing
+            to open-source projects, or sharpening my Python skills.
+          </p>
+          <ul class="tech-list">
+            <li>Selenium / Playwright / Cypress</li>
+            <li>Python / TypeScript</li>
+            <li>OCPP / OCPI / Websockets</li>
+            <li>Postman / REST / SOAP</li>
+            <li>GitHub Actions / AWS</li>
+            <li>JIRA / Xray / Kibana</li>
+          </ul>
+        </div>
+        <div class="about-photo">
+          <div class="photo-wrapper">
+            <!--
+              Cartoon avatar — replace with your real professional photo:
+              <img src="assets/photo.jpg" alt="Stanimir Dimitrov" />
+              Customise the avatar at https://dicebear.com/playground
+            -->
+            <img src="assets/photo.jpg" alt="Stanimir Dimitrov" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SKILLS ─────────────────────────────────────────── -->
+  <section id="skills">
+    <div class="section-inner">
+      <h2 class="section-title"><span class="accent mono">02.</span> <span data-i18n="skills_title">Skills &amp; Tools</span></h2>
+      <div class="skills-grid">
+
+        <div class="skill-card">
+          <div class="skill-icon">🧪</div>
+          <h3 data-i18n="skill_automation_title">Test Automation</h3>
+          <ul>
+            <li>Selenium WebDriver</li>
+            <li>Playwright</li>
+            <li>Cypress</li>
+            <li>k6 (Performance)</li>
+          </ul>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-icon">💻</div>
+          <h3 data-i18n="skill_languages_title">Languages</h3>
+          <ul>
+            <li>Python</li>
+            <li>TypeScript</li>
+            <li>JavaScript</li>
+            <li>SQL</li>
+          </ul>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-icon">🔌</div>
+          <h3 data-i18n="skill_api_title">API &amp; Protocols</h3>
+          <ul>
+            <li>REST / SOAP</li>
+            <li>Websockets</li>
+            <li>OCPP 1.6 &amp; 2.0.1 / OCPI</li>
+            <li>Postman / Newman</li>
+          </ul>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-icon">⚙️</div>
+          <h3 data-i18n="skill_cicd_title">CI / CD &amp; Cloud</h3>
+          <ul>
+            <li>GitHub Actions</li>
+            <li>Docker</li>
+            <li>AWS / Azure</li>
+            <li>GitLab CI</li>
+          </ul>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-icon">📋</div>
+          <h3 data-i18n="skill_frameworks_title">Frameworks</h3>
+          <ul>
+            <li>pytest</li>
+            <li>Jest / Vitest</li>
+            <li>Cucumber (BDD)</li>
+            <li>Allure Reports</li>
+          </ul>
+        </div>
+
+        <div class="skill-card">
+          <div class="skill-icon">🛠️</div>
+          <h3 data-i18n="skill_tools_title">Project &amp; QA Tools</h3>
+          <ul>
+            <li>JIRA / Xray</li>
+            <li>Kibana / Elasticsearch</li>
+            <li>TestRail</li>
+            <li>Git / GitHub</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SERVICES ───────────────────────────────────────── -->
+  <section id="services">
+    <div class="section-inner">
+      <h2 class="section-title"><span class="accent mono">03.</span> <span data-i18n="services_title">Services</span></h2>
+      <div class="services-grid">
+
+        <div class="service-card">
+          <div class="service-num mono accent">01</div>
+          <h3 data-i18n="svc1_title">Test Automation Framework</h3>
+          <p data-i18n="svc1_desc">
+            Design and build scalable, maintainable automation frameworks from
+            scratch using Selenium, Playwright, or Cypress — tailored to your
+            tech stack and team workflow.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-num mono accent">02</div>
+          <h3 data-i18n="svc2_title">API &amp; Backend Testing</h3>
+          <p data-i18n="svc2_desc">
+            End-to-end API test suites with Postman collections, REST Assured, or
+            Python requests — covering functional, contract, and regression testing.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-num mono accent">03</div>
+          <h3 data-i18n="svc3_title">CI/CD Test Integration</h3>
+          <p data-i18n="svc3_desc">
+            Integrate your test suite into GitHub Actions, Jenkins, or GitLab CI
+            pipelines so quality gates run automatically on every commit and pull
+            request.
+          </p>
+        </div>
+
+        <div class="service-card">
+          <div class="service-num mono accent">04</div>
+          <h3 data-i18n="svc4_title">QA Strategy &amp; Consulting</h3>
+          <p data-i18n="svc4_desc">
+            Define test strategies, coverage plans, and quality processes from
+            scratch — helping teams shift quality left and reduce bug escape rate.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PROJECTS ───────────────────────────────────────── -->
+  <section id="projects">
+    <div class="section-inner">
+      <h2 class="section-title"><span class="accent mono">04.</span> <span data-i18n="projects_title">Projects</span></h2>
+      <div class="projects-grid">
+
+        <!-- NDA Project 1 -->
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-icon">⚡</span>
+            <span class="nda-badge">🔒 <span data-i18n="nda_label">Confidential</span></span>
+          </div>
+          <div class="project-industry" data-i18n="proj1_industry">FinTech · Payment Platform</div>
+          <h3 class="project-title" data-i18n="proj1_title">Regression Automation Suite</h3>
+          <p class="project-desc" data-i18n="proj1_desc">
+            End-to-end automation framework for a payment platform covering checkout
+            flows, transaction validation, and fraud detection scenarios.
+          </p>
+          <div class="project-impact">
+            <span data-i18n="proj1_impact1">⬇ 65% less manual testing</span>
+            <span data-i18n="proj1_impact2">✓ 500+ test cases</span>
+          </div>
+          <ul class="project-tags">
+            <li>Python</li><li>Playwright</li><li>OCPP/OCPI</li><li>GitHub Actions</li>
+          </ul>
+        </div>
+
+        <!-- NDA Project 2 -->
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-icon">🏥</span>
+            <span class="nda-badge">🔒 <span data-i18n="nda_label">Confidential</span></span>
+          </div>
+          <div class="project-industry" data-i18n="proj2_industry">E-Commerce · Retail Platform</div>
+          <h3 class="project-title" data-i18n="proj2_title">API Test Framework</h3>
+          <p class="project-desc" data-i18n="proj2_desc">
+            Complete REST API test suite covering product catalogue, cart, order
+            management and third-party integrations with contract testing.
+          </p>
+          <div class="project-impact">
+            <span data-i18n="proj2_impact1">⬇ 40% faster release cycle</span>
+            <span data-i18n="proj2_impact2">✓ 300+ API tests</span>
+          </div>
+          <ul class="project-tags">
+            <li>Python</li><li>ServiceNow</li><li>Jira</li><li>GxP</li>
+          </ul>
+        </div>
+
+        <!-- Personal Project -->
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-icon">📁</span>
+            <div class="project-links">
+              <a href="https://github.com/StanDimitrov/python_oop" target="_blank" rel="noopener" title="GitHub" aria-label="GitHub link">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.42 7.88 10.96.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.19a11.1 11.1 0 0 1 2.9-.39c.98 0 1.97.13 2.9.39 2.2-1.5 3.17-1.19 3.17-1.19.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.41-5.27 5.69.41.36.78 1.07.78 2.15v3.19c0 .31.21.67.8.56A10.51 10.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+              </a>
+            </div>
+          </div>
+          <div class="project-industry" data-i18n="proj3_industry">Personal · Learning Project</div>
+          <h3 class="project-title" data-i18n="proj3_title">Python OOP &amp; API Testing</h3>
+          <p class="project-desc" data-i18n="proj3_desc">
+            Personal project exploring OOP principles in Python, including a REST
+            API test suite with pytest and mocked HTTP calls.
+          </p>
+          <ul class="project-tags">
+            <li>Python</li><li>pytest</li><li>OOP</li><li>REST API</li>
+          </ul>
+        </div>
+
+      </div>
+      <p class="projects-note mono" data-i18n="projects_note">* Client projects above are anonymised under NDA. Case studies available on request.</p>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ────────────────────────────────────────── -->
+  <section id="contact">
+    <div class="section-inner contact-inner">
+      <p class="contact-overline mono accent" data-i18n="contact_overline">05. What's Next?</p>
+      <h2 class="contact-title" data-i18n="contact_title">Get In Touch</h2>
+      <p class="contact-desc" data-i18n="contact_desc">
+        Whether you have a project to automate, a team that needs a QA strategy,
+        or just want to say hi — my inbox is always open.
+      </p>
+      <!-- Replace YOUR_FORM_ID with your Formspree endpoint after setup -->
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name" data-i18n="form_name">Name</label>
+            <input type="text" id="name" name="name" data-i18n-ph="form_name_ph" placeholder="Your name" required />
+          </div>
+          <div class="form-group">
+            <label for="email" data-i18n="form_email">Email</label>
+            <input type="email" id="email" name="email" data-i18n-ph="form_email_ph" placeholder="your@email.com" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="subject" data-i18n="form_subject">Subject</label>
+          <input type="text" id="subject" name="subject" data-i18n-ph="form_subject_ph" placeholder="What's this about?" />
+        </div>
+        <div class="form-group">
+          <label for="message" data-i18n="form_message">Message</label>
+          <textarea id="message" name="message" rows="5" data-i18n-ph="form_message_ph" placeholder="Tell me about your project..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary" data-i18n="form_submit">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-social">
+      <a href="https://github.com/StanDimitrov" target="_blank" rel="noopener" aria-label="GitHub">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.3 9.42 7.88 10.96.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.68-1.28-1.68-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.2 1.77 1.2 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.19a11.1 11.1 0 0 1 2.9-.39c.98 0 1.97.13 2.9.39 2.2-1.5 3.17-1.19 3.17-1.19.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.43-2.7 5.41-5.27 5.69.41.36.78 1.07.78 2.15v3.19c0 .31.21.67.8.56A10.51 10.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/stanimir-dimitrov" target="_blank" rel="noopener" aria-label="LinkedIn">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.44-2.14 2.93v5.68H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45C23.2 24 24 23.23 24 22.27V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+      </a>
+    </div>
+    <p class="footer-copy mono">
+      Designed &amp; Built by <span class="accent">Stanimir Dimitrov</span>
+    </p>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
