@@ -91,6 +91,8 @@ img { display: block; max-width: 100%; }
   font-weight: 700;
   color: var(--white);
   letter-spacing: 2px;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .nav-links {
