@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; object-src 'none'; base-uri 'self';" />
+  <title>Shift-Left Testing in SAFe Environments | Stanimir Dimitrov</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <nav id="navbar">
+    <a href="../index.html" class="nav-logo">SD<span class="accent">.</span></a>
+    <a href="../index.html#articles" class="article-nav-back">← Portfolio</a>
+  </nav>
+
+  <main class="article-main">
+    <div class="article-page">
+
+      <div class="article-header">
+        <span class="article-category">QA Strategy</span>
+        <h1 class="article-h1">Shift-Left Testing in SAFe Environments</h1>
+        <div class="article-meta">
+          <span>Stanimir Dimitrov</span>
+          <span>June 2026</span>
+          <span>~6 min read</span>
+        </div>
+        <p class="article-lead">
+          Shift-Left is a QA philosophy that moves testing as early as possible in the development lifecycle.
+          In large-scale Agile frameworks like SAFe, this means embedding quality from PI Planning itself —
+          not just the testing phase — dramatically reducing defect escape rates and accelerating delivery.
+        </p>
+      </div>
+
+      <div class="article-body">
+
+        <h2>What is Shift-Left?</h2>
+        <p>On a traditional project timeline, development is on the left and testing is on the right. <strong>Shift-Left</strong> means moving quality activities — requirements reviews, test design, test automation — as early (as far left) as possible.</p>
+
+        <div class="article-callout">
+          <p>The <strong>1:10:100 rule</strong>: fixing a defect costs 1× during development, 10× during testing, and 100× in production. Shift-Left directly targets this cost curve by catching defects at their cheapest point.</p>
+        </div>
+
+        <h2>Traditional vs Shift-Left QA</h2>
+        <table class="article-table">
+          <thead><tr><th>Phase</th><th>Traditional QA</th><th>Shift-Left QA</th></tr></thead>
+          <tbody>
+            <tr><td>Requirements</td><td>QA not involved</td><td>QA reviews &amp; writes acceptance criteria</td></tr>
+            <tr><td>Design</td><td>QA not involved</td><td>QA validates testability of the design</td></tr>
+            <tr><td>Development</td><td>QA waits</td><td>TDD / BDD — tests are written first</td></tr>
+            <tr><td>Testing</td><td>All testing happens here</td><td>Automated regression only; manual done earlier</td></tr>
+            <tr><td>Deployment</td><td>QA manual sign-off</td><td>CI/CD quality gates enforce quality automatically</td></tr>
+          </tbody>
+        </table>
+
+        <h2>SAFe — Scaled Agile Framework overview</h2>
+        <p>SAFe (Scaled Agile Framework) applies Agile principles at the enterprise level — across multiple teams, multiple products, and multiple geographies. Its key concepts:</p>
+
+        <ul>
+          <li><strong>Team level</strong>: 5–12 people, 2-week iterations (sprints)</li>
+          <li><strong>Agile Release Train (ART)</strong>: 50–125 people working together on a shared mission</li>
+          <li><strong>Program Increment (PI)</strong>: 5 iterations (~10 weeks) with shared, committed objectives</li>
+          <li><strong>PI Planning</strong>: 2-day all-hands event at the start of each PI where all teams align on features and dependencies</li>
+          <li><strong>Built-in Quality</strong>: one of SAFe's core pillars — quality is everyone's responsibility at every level</li>
+        </ul>
+
+        <h2>Where QA integrates in SAFe ceremonies</h2>
+
+        <h3>PI Planning — where Shift-Left starts</h3>
+        <p>This is the most critical moment for Shift-Left. Before a single line of code is written, QA participates in:</p>
+        <ul>
+          <li>Reviewing user stories for <strong>testability</strong> — "How will we verify this is done?"</li>
+          <li>Writing <strong>acceptance criteria</strong> collaboratively with Product Owners using Gherkin syntax</li>
+          <li>Identifying cross-team <strong>dependencies</strong> and integration testing risks</li>
+          <li>Estimating <strong>test effort</strong> so it's included in team capacity — not added as an afterthought</li>
+          <li>Flagging vague stories that can't be tested — enforcing the <strong>Definition of Ready</strong></li>
+        </ul>
+
+        <h3>Iteration Planning (every sprint)</h3>
+        <ul>
+          <li>All stories accepted must have clear, testable acceptance criteria before development begins</li>
+          <li>Test environments verified ready before coding starts</li>
+          <li>Test data requirements identified upfront</li>
+        </ul>
+
+        <h3>System Demo (end of each iteration)</h3>
+        <p>QA validates the integrated product against PI objectives. Automated test results are shared alongside the feature demo — showing quality metrics, not just functionality.</p>
+
+        <h3>Inspect &amp; Adapt (end of PI)</h3>
+        <p>QA presents metrics: defect escape rate, automation coverage %, regression run time, flaky test count. The team identifies systemic quality issues and improvement actions for the next PI.</p>
+
+        <h2>BDD / Gherkin — the primary Shift-Left tool</h2>
+        <p>Behaviour-Driven Development (BDD) is the practical engine of Shift-Left in SAFe. Acceptance criteria are written in <strong>Gherkin</strong> — plain English that both stakeholders and automation tools understand — <em>before development begins</em>.</p>
+
+        <pre><code>Feature: EV Charging Session Authorization
+
+  Background:
+    Given the CSMS is running
+    And charger "CP-001" is connected and Available
+
+  Scenario: Successful session with registered RFID
+    Given a registered RFID card with ID "ABC-123"
+    When the user taps the card on charger "CP-001"
+    Then an Authorize request is sent to the CSMS
+    And the CSMS responds with status "Accepted"
+    And the charger status changes to "Preparing"
+    And a StartTransaction is sent within 30 seconds
+
+  Scenario: Unregistered RFID is rejected
+    Given an unregistered RFID card with ID "XXX-999"
+    When the user taps the card on charger "CP-001"
+    Then the CSMS responds with status "Invalid"
+    And the charger remains in "Available" status
+    And no transaction is started
+
+  Scenario: Network interruption during active charge
+    Given an active charging session on charger "CP-001"
+    When the network connection drops for 5 minutes
+    Then the charger continues charging using local authorization
+    And the session is recovered when network is restored</code></pre>
+
+        <div class="article-callout">
+          <p>These scenarios are written <strong>during PI Planning</strong> — weeks before implementation. They become the executable automated tests that run in CI/CD on every commit and form the Definition of Done for each story.</p>
+        </div>
+
+        <h2>Shift-Left practices that work in SAFe</h2>
+
+        <h3>Three Amigos sessions</h3>
+        <p>For each significant story, a 30-minute meeting brings together: <strong>Product Owner</strong> (business perspective), <strong>Developer</strong> (technical feasibility), and <strong>QA</strong> (quality &amp; testability). Together they clarify edge cases and write acceptance criteria. This single practice eliminates a large class of defects by ensuring shared understanding before any code is written.</p>
+
+        <h3>Definition of Done — quality gates</h3>
+        <p>A story is only "done" when it passes all quality gates. In SAFe, these are agreed at the ART level:</p>
+        <ul>
+          <li>All Gherkin acceptance criteria pass (automated, in CI/CD)</li>
+          <li>Unit test coverage ≥ 80% for new code</li>
+          <li>No new critical or high defects introduced</li>
+          <li>Code reviewed and approved by at least one peer</li>
+          <li>API contract tests pass</li>
+          <li>Performance benchmarks within defined thresholds</li>
+          <li>No new static analysis violations (linting, security scan)</li>
+        </ul>
+
+        <h3>Continuous Integration as the quality gate</h3>
+        <p>Every commit triggers the full automated suite. In SAFe, the rule is clear: <strong>if the pipeline is red, no one merges until it's fixed</strong>. QA owns pipeline health and the triage of test failures.</p>
+
+        <pre><code># GitHub Actions — automated quality gate (runs on every PR)
+on: [pull_request]
+
+jobs:
+  quality-gate:
+    steps:
+      - name: Unit tests &amp; coverage     # 2 min — blocks if &lt;80% coverage
+      - name: API contract tests         # 3 min — validates OCPP schemas
+      - name: BDD acceptance tests       # 8 min — Gherkin scenarios
+      - name: OCPP protocol tests        # 5 min — full transaction flows
+      - name: Static analysis            # 2 min — linting, security
+    # Total: ~20 min — merge is blocked if any step fails</code></pre>
+
+        <h2>Metrics that prove Shift-Left works</h2>
+        <table class="article-table">
+          <thead><tr><th>Metric</th><th>Before Shift-Left</th><th>After 2 PIs</th></tr></thead>
+          <tbody>
+            <tr><td>Production defects per PI</td><td>~40</td><td>~8 (−80%)</td></tr>
+            <tr><td>Defects found in testing phase</td><td>~120</td><td>~30 (−75%)</td></tr>
+            <tr><td>Automation coverage</td><td>35%</td><td>78%</td></tr>
+            <tr><td>Regression run time</td><td>6 hours (manual)</td><td>22 min (automated CI)</td></tr>
+            <tr><td>Stories with acceptance criteria at PI start</td><td>20%</td><td>95%</td></tr>
+            <tr><td>Average defect fix cost</td><td>High (found late)</td><td>Low (found early)</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Common pitfalls</h2>
+        <ul>
+          <li><strong>Writing acceptance criteria after development</strong> — defeats the entire purpose; the developer already made implementation choices</li>
+          <li><strong>QA as a separate silo or bottleneck</strong> — in Shift-Left, QA is embedded in the team and involved from day one, not a gate at the end</li>
+          <li><strong>Automating unstable or rapidly-changing code</strong> — flaky tests that break randomly are worse than no tests; automate stable features first</li>
+          <li><strong>Ignoring non-functional requirements</strong> — performance, security, and accessibility testing must also shift left, not just functional tests</li>
+          <li><strong>Over-engineering test frameworks</strong> — simple, readable, maintainable tests always beat complex, clever frameworks that no one can debug</li>
+          <li><strong>No ownership of test debt</strong> — like code debt, test debt must be tracked and paid down across PIs</li>
+        </ul>
+
+        <h2>Real-world application at Total Energies</h2>
+        <p>At Total Energies Charging Services, Shift-Left was implemented across the full ART. QA engineers participated in every PI Planning event, writing Gherkin scenarios for OCPP protocol flows — Authorize, StartTransaction, OCPI roaming, ISO 15118 Plug &amp; Charge — before any code was written.</p>
+
+        <p>Acceptance criteria for complex features like payment flow certification (Mangopay, Fiserv) were defined and validated weeks before implementation began. Developers could write code against known, testable specifications, eliminating entire categories of ambiguity-related defects.</p>
+
+        <p>The result: critical protocol defects that had previously escaped to production were caught in the GitHub Actions pipeline within minutes of the commit. The team released new OCPP features on a consistent 2-week cadence with high confidence.</p>
+
+      </div>
+
+      <div class="article-footer">
+        <a href="../index.html#articles" class="article-nav-back">← Back to Tech Insights</a>
+        <span class="mono" style="font-size:0.75rem;color:var(--muted);">Stanimir Dimitrov · 2026</span>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+    });
+  </script>
+
+</body>
+</html>

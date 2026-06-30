@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; object-src 'none'; base-uri 'self';" />
+  <title>OCPP — Testing EV Charging Standards | Stanimir Dimitrov</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <nav id="navbar">
+    <a href="../index.html" class="nav-logo">SD<span class="accent">.</span></a>
+    <a href="../index.html#articles" class="article-nav-back">← Portfolio</a>
+  </nav>
+
+  <main class="article-main">
+    <div class="article-page">
+
+      <div class="article-header">
+        <span class="article-category">Protocol Testing</span>
+        <h1 class="article-h1">OCPP — Testing EV Charging Standards</h1>
+        <div class="article-meta">
+          <span>Stanimir Dimitrov</span>
+          <span>June 2026</span>
+          <span>~7 min read</span>
+        </div>
+        <p class="article-lead">
+          The Open Charge Point Protocol (OCPP) is the language that EV charging stations use to communicate
+          with their management systems. Testing it requires understanding WebSocket protocol mechanics,
+          bidirectional message flows, and strict compliance with the OCPP specification.
+        </p>
+      </div>
+
+      <div class="article-body">
+
+        <h2>What is OCPP?</h2>
+        <p>OCPP (Open Charge Point Protocol) is an open standard for communication between EV charging stations (<strong>Charge Points</strong>) and their backend management systems (<strong>Central System / CSMS</strong>). Created by the <strong>Open Charge Alliance (OCA)</strong>, it is now the global de-facto standard used by the vast majority of EV charging networks.</p>
+
+        <div class="article-callout">
+          <p><strong>Charge Point (CP)</strong> = the physical charger on the street. <strong>Central System (CS / CSMS)</strong> = the cloud backend managing all chargers. <strong>OCPP</strong> = the protocol connecting them over WebSocket.</p>
+        </div>
+
+        <h2>Architecture &amp; transport</h2>
+        <p>OCPP communicates over <strong>WebSocket</strong> (wss://) — a persistent, full-duplex TCP connection that allows <em>both</em> sides to send messages at any time without waiting for a request. This is critical for real-time operations like remote start/stop of charging sessions.</p>
+
+        <pre><code>[ Charge Point ]  ←── WebSocket (wss://) ──→  [ Central System ]
+  (EV charger)      persistent, always-on        (cloud backend)
+
+  CP initiates:              CS responds &amp; initiates:
+  BootNotification.req  →   ← BootNotification.conf
+  Heartbeat.req         →   ← Heartbeat.conf
+  StartTransaction.req  →   ← StartTransaction.conf
+                             ← RemoteStartTransaction.req
+  RemoteStart.conf      →</code></pre>
+
+        <p>Each OCPP message follows the format: <code>[MessageTypeId, UniqueId, Action, Payload]</code> — where MessageType 2 = Request, 3 = Response, 4 = Error.</p>
+
+        <h2>OCPP 1.6 vs OCPP 2.0.1</h2>
+        <table class="article-table">
+          <thead><tr><th>Feature</th><th>OCPP 1.6</th><th>OCPP 2.0.1</th></tr></thead>
+          <tbody>
+            <tr><td>Transport</td><td>WebSocket (JSON or SOAP)</td><td>WebSocket (JSON only)</td></tr>
+            <tr><td>Security</td><td>Basic TLS</td><td>Security Profiles (PKI, mutual TLS)</td></tr>
+            <tr><td>ISO 15118 (Plug &amp; Charge)</td><td>Not supported</td><td>Fully supported</td></tr>
+            <tr><td>Device management</td><td>Limited</td><td>Full DeviceManagement profile</td></tr>
+            <tr><td>Smart charging</td><td>Basic profiles</td><td>Enhanced, ISO 15118-2</td></tr>
+            <tr><td>Error codes</td><td>Limited</td><td>Improved, detailed status codes</td></tr>
+            <tr><td>Market adoption</td><td>Very widespread (legacy)</td><td>Growing rapidly (2022+)</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Core message types — OCPP 1.6</h2>
+
+        <h3>Connection &amp; maintenance</h3>
+        <ul>
+          <li><strong>BootNotification</strong> — CP announces itself on startup (model, vendor, serial). CS responds with <code>Accepted / Pending / Rejected</code> and a heartbeat interval</li>
+          <li><strong>Heartbeat</strong> — CP sends periodically to prove it is online. CS responds with current timestamp (used for CP clock synchronization)</li>
+          <li><strong>StatusNotification</strong> — CP reports connector status: <code>Available / Preparing / Charging / SuspendedEV / SuspendedEVSE / Finishing / Reserved / Unavailable / Faulted</code></li>
+        </ul>
+
+        <h3>Authorization &amp; transactions</h3>
+        <ul>
+          <li><strong>Authorize</strong> — CP asks CS whether an RFID / ID tag is allowed. CS responds <code>Accepted / Blocked / Expired / Invalid / ConcurrentTx</code></li>
+          <li><strong>StartTransaction</strong> — CP notifies CS that charging has begun (connector ID, ID tag, meter start value, timestamp)</li>
+          <li><strong>StopTransaction</strong> — CP notifies CS that charging ended. Includes reason, meter stop value, and transaction data</li>
+          <li><strong>MeterValues</strong> — CP sends energy measurements (kWh, voltage, current, power) at configurable intervals during charging</li>
+        </ul>
+
+        <h3>Remote control (CS → CP)</h3>
+        <ul>
+          <li><strong>RemoteStartTransaction</strong> — CS initiates a session remotely (app-based / RFID-free charging)</li>
+          <li><strong>RemoteStopTransaction</strong> — CS stops an active session remotely</li>
+          <li><strong>Reset</strong> — CS restarts the CP: <code>Soft</code> (graceful) or <code>Hard</code> (immediate)</li>
+          <li><strong>UnlockConnector</strong> — CS releases a mechanically locked connector</li>
+          <li><strong>GetConfiguration / ChangeConfiguration</strong> — CS reads and modifies CP settings (heartbeat interval, charge profiles, etc.)</li>
+        </ul>
+
+        <h2>OCPI — the roaming protocol</h2>
+        <p>While OCPP handles communication <em>within</em> a charging network, <strong>OCPI (Open Charge Point Interface)</strong> handles communication <em>between</em> different charging networks, enabling EV roaming.</p>
+
+        <table class="article-table">
+          <thead><tr><th></th><th>OCPP</th><th>OCPI</th></tr></thead>
+          <tbody>
+            <tr><td>Connects</td><td>Charger ↔ Backend</td><td>Network A ↔ Network B</td></tr>
+            <tr><td>Transport</td><td>WebSocket</td><td>REST API (HTTPS)</td></tr>
+            <tr><td>Use case</td><td>Charger management</td><td>Roaming &amp; interoperability</td></tr>
+            <tr><td>Actors</td><td>CP, CSMS</td><td>CPO (operator), eMSP (provider)</td></tr>
+            <tr><td>Versions</td><td>1.6, 2.0.1</td><td>2.1.1, 2.2.1</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Testing strategy</h2>
+
+        <h3>1 — Message schema validation</h3>
+        <p>Validate that every message conforms to the OCPP JSON schema. Test valid payloads, invalid/missing required fields, boundary values, and unknown actions.</p>
+
+        <pre><code># Python: validate BootNotification payload against OCPP schema
+def test_boot_notification_valid():
+    payload = {
+        "chargePointModel": "CP-X100",
+        "chargePointVendor": "Acme Corp",
+        "firmwareVersion": "1.2.3"
+    }
+    result = csms.handle_message("BootNotification", payload)
+    assert result["status"] == "Accepted"
+
+def test_boot_notification_missing_required_field():
+    payload = {"chargePointVendor": "Acme Corp"}  # Missing chargePointModel
+    with pytest.raises(ValidationError) as exc:
+        csms.handle_message("BootNotification", payload)
+    assert "chargePointModel" in str(exc.value)</code></pre>
+
+        <h3>2 — Full transaction flow testing</h3>
+        <p>Test complete end-to-end scenarios: the exact sequence of messages that constitute a valid charging session.</p>
+
+        <pre><code># Complete charging session — message sequence
+Step 1:  CP  → BootNotification.req   (model, vendor)
+Step 2:  CS  ← BootNotification.conf  (Accepted, interval=60s)
+Step 3:  CP  → Heartbeat.req          (every 60s)
+Step 4:  CS  ← Heartbeat.conf         (currentTime)
+Step 5:  User taps RFID "ABC-123"
+Step 6:  CP  → Authorize.req          (idTag: "ABC-123")
+Step 7:  CS  ← Authorize.conf         (status: Accepted)
+Step 8:  CP  → StartTransaction.req   (connectorId:1, meterStart:12345)
+Step 9:  CS  ← StartTransaction.conf  (transactionId: 789)
+Step 10: CP  → MeterValues.req        (every 5 min: kWh readings)
+Step 11: User stops session
+Step 12: CP  → StopTransaction.req    (meterStop:15678, reason:Local)
+Step 13: CS  ← StopTransaction.conf</code></pre>
+
+        <h3>3 — Edge cases &amp; error scenarios</h3>
+        <ul>
+          <li><strong>Unauthorized RFID</strong>: Authorize returns <code>Invalid</code> — verify charger stays <code>Available</code> and rejects start</li>
+          <li><strong>Blocked card</strong>: Authorize returns <code>Blocked</code> — verify appropriate user feedback</li>
+          <li><strong>Connector fault during charging</strong>: StatusNotification with <code>Faulted</code> — verify emergency stop and fault logging</li>
+          <li><strong>Network disconnect during active session</strong>: verify offline local authorization list and session recovery on reconnect</li>
+          <li><strong>Concurrent session attempt</strong>: start a second session on an already-charging connector</li>
+          <li><strong>Clock drift</strong>: CS responds to Heartbeat with a timestamp 30 minutes in the future</li>
+          <li><strong>Malformed messages</strong>: invalid JSON, wrong MessageTypeId, unknown action name, oversized payload</li>
+          <li><strong>Meter value anomalies</strong>: negative energy values, meter rollover, zero-duration sessions</li>
+        </ul>
+
+        <h3>4 — WebSocket connection testing</h3>
+        <pre><code># Python: test WebSocket reconnection behaviour
+import websockets
+import asyncio
+
+async def test_reconnection_recovery():
+    uri = "wss://csms.example.com/CP-001"
+    async with websockets.connect(uri) as ws:
+        # Simulate network drop after BootNotification
+        await send_boot_notification(ws)
+        await ws.close()  # Force disconnect
+
+    # Reconnect and verify session recovery
+    async with websockets.connect(uri) as ws:
+        response = await send_heartbeat(ws)
+        assert response["currentTime"] is not None</code></pre>
+
+        <h3>5 — Observability with Kibana</h3>
+        <p>In production, all OCPP messages are logged to Elasticsearch. Key metrics monitored in Kibana:</p>
+        <ul>
+          <li>Transaction success/failure rates per charger model and location</li>
+          <li>Heartbeat gaps — identifies chargers that went offline</li>
+          <li>Authorize rejection rates by reason code (<code>Invalid</code>, <code>Blocked</code>, <code>Expired</code>)</li>
+          <li>MeterValues anomalies — energy spikes, missing intervals</li>
+          <li>WebSocket reconnection frequency — indicates network instability</li>
+          <li>BootNotification frequency — chargers restarting unexpectedly</li>
+        </ul>
+
+        <h2>Tools used in practice</h2>
+        <table class="article-table">
+          <thead><tr><th>Tool</th><th>Purpose</th></tr></thead>
+          <tbody>
+            <tr><td>OCTT (OCPP Compliance Testing Tool)</td><td>Official OCA compliance test suite for certification</td></tr>
+            <tr><td>Python <code>websockets</code> library</td><td>Custom CP/CS simulator scripts for integration tests</td></tr>
+            <tr><td>Playwright + WebSocket API</td><td>E2E automation that includes protocol-level validation</td></tr>
+            <tr><td>Wireshark</td><td>Low-level WebSocket frame inspection and packet capture</td></tr>
+            <tr><td>Kibana / Elasticsearch</td><td>Production log monitoring, alerting, anomaly detection</td></tr>
+            <tr><td>Postman + Newman</td><td>OCPI REST API testing and CI/CD integration</td></tr>
+            <tr><td>Xray (Jira)</td><td>Test case management and execution tracking</td></tr>
+          </tbody>
+        </table>
+
+        <h2>OCPP 2.0.1 — what's new for testers</h2>
+        <ul>
+          <li><strong>Security Profiles</strong>: TLS client certificates, OCSP stapling — requires certificate management testing</li>
+          <li><strong>ISO 15118 / Plug &amp; Charge</strong>: Vehicle certificate validation flows — complex multi-step authorization</li>
+          <li><strong>Device Management profile</strong>: Firmware updates, log uploads, diagnostics — lifecycle testing</li>
+          <li><strong>Display Messages</strong>: Test that CP correctly renders messages from CS on user interface</li>
+          <li><strong>Improved error codes</strong>: More granular status reporting requires updated test assertions</li>
+        </ul>
+
+        <div class="article-callout">
+          <p>At Total Energies, both OCPP 1.6 and 2.0.1 were certified using a combination of the official OCTT tool and custom Python-based simulators integrated into a GitHub Actions CI/CD pipeline — ensuring protocol compliance ran automatically on every deployment.</p>
+        </div>
+
+      </div>
+
+      <div class="article-footer">
+        <a href="../index.html#articles" class="article-nav-back">← Back to Tech Insights</a>
+        <span class="mono" style="font-size:0.75rem;color:var(--muted);">Stanimir Dimitrov · 2026</span>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+    });
+  </script>
+
+</body>
+</html>

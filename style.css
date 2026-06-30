@@ -715,8 +715,9 @@ footer {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 60px;
-  align-items: center;
+  align-items: start;
 }
+.ai-text { text-align: left; }
 .ai-tagline {
   font-size: 1.05rem;
   color: var(--muted);
@@ -794,9 +795,181 @@ footer {
   gap: 6px;
   margin-top: 18px;
   font-size: 0.78rem;
+  color: var(--accent);
+  font-family: 'Fira Code', monospace;
+  text-decoration: none;
+  transition: var(--transition);
+}
+.article-read-more:hover { opacity: 0.75; }
+
+/* ── ARTICLE PAGES ────────────────────────────────────── */
+.article-nav-back {
   color: var(--muted);
   font-family: 'Fira Code', monospace;
-  font-style: italic;
+  font-size: 0.82rem;
+  text-decoration: none;
+  transition: var(--transition);
+}
+.article-nav-back:hover { color: var(--accent); }
+
+.article-main {
+  padding-top: var(--nav-h);
+  min-height: 100vh;
+}
+
+.article-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 60px 50px 80px;
+}
+
+.article-header {
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--bg3);
+}
+
+.article-category {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.72rem;
+  color: var(--accent);
+  background: rgba(100,255,218,0.07);
+  border: 1px solid rgba(100,255,218,0.2);
+  padding: 3px 10px;
+  border-radius: 3px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.article-h1 {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  color: var(--white);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.article-meta {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.78rem;
+  color: var(--muted);
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.article-lead {
+  margin-top: 24px;
+  font-size: 1.05rem;
+  color: var(--text);
+  line-height: 1.8;
+  border-left: 3px solid var(--accent);
+  padding-left: 20px;
+}
+
+.article-body h2 {
+  font-size: 1.4rem;
+  color: var(--white);
+  margin: 44px 0 16px;
+}
+
+.article-body h3 {
+  font-size: 1.05rem;
+  color: var(--white);
+  margin: 28px 0 12px;
+}
+
+.article-body p {
+  color: var(--muted);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+
+.article-body ul, .article-body ol {
+  color: var(--muted);
+  padding-left: 24px;
+  margin-bottom: 16px;
+}
+
+.article-body li { margin-bottom: 8px; line-height: 1.7; }
+
+.article-body code {
+  font-family: 'Fira Code', monospace;
+  background: var(--bg2);
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 0.88em;
+  color: var(--accent);
+}
+
+.article-body pre {
+  background: var(--bg2);
+  border: 1px solid var(--bg3);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  margin: 20px 0;
+  overflow-x: auto;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.83rem;
+  line-height: 1.7;
+  color: #a8b2d8;
+}
+
+.article-body pre code { background: none; padding: 0; color: inherit; font-size: inherit; }
+
+.article-callout {
+  background: rgba(100,255,218,0.06);
+  border: 1px solid rgba(100,255,218,0.2);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+
+.article-callout p { margin: 0; color: var(--text); }
+
+.article-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 24px 0;
+  font-size: 0.88rem;
+}
+
+.article-table th {
+  text-align: left;
+  padding: 12px 16px;
+  background: var(--bg2);
+  color: var(--white);
+  font-weight: 600;
+  border-bottom: 2px solid var(--bg3);
+}
+
+.article-table td {
+  padding: 10px 16px;
+  color: var(--muted);
+  border-bottom: 1px solid var(--bg3);
+}
+
+.article-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+.article-footer {
+  margin-top: 60px;
+  padding-top: 32px;
+  border-top: 1px solid var(--bg3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.article-body strong { color: var(--white); font-weight: 600; }
+
+@media (max-width: 600px) {
+  .article-page { padding: 40px 24px 60px; }
+  .article-h1 { font-size: 1.6rem; }
+  .article-table { font-size: 0.78rem; }
+  .article-table th, .article-table td { padding: 8px 10px; }
 }
 
 /* ── LANGUAGE SWITCHER ──────────────────────────────────── */

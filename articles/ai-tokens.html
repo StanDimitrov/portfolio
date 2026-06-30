@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; object-src 'none'; base-uri 'self';" />
+  <title>AI Tokens — How LLMs Process Text | Stanimir Dimitrov</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <nav id="navbar">
+    <a href="../index.html" class="nav-logo">SD<span class="accent">.</span></a>
+    <a href="../index.html#articles" class="article-nav-back">← Portfolio</a>
+  </nav>
+
+  <main class="article-main">
+    <div class="article-page">
+
+      <div class="article-header">
+        <span class="article-category">AI &amp; ML</span>
+        <h1 class="article-h1">AI Tokens — How LLMs Process Text</h1>
+        <div class="article-meta">
+          <span>Stanimir Dimitrov</span>
+          <span>June 2026</span>
+          <span>~8 min read</span>
+        </div>
+        <p class="article-lead">
+          Large Language Models don't read words — they read tokens. Understanding what a token is,
+          how tokenization works, and how it affects cost, context, and model behaviour is fundamental
+          to working effectively with any AI system.
+        </p>
+      </div>
+
+      <div class="article-body">
+
+        <h2>What is a token?</h2>
+        <p>A token is <strong>not a word, not a character, and not a syllable</strong>. It's a chunk of text that a language model has learned to recognize as a meaningful unit during training — the atomic unit of text for an LLM.</p>
+
+        <div class="article-callout">
+          <p>Rule of thumb: <strong>1 token ≈ 4 characters</strong> in English, or roughly <strong>¾ of a word</strong>. 100 tokens ≈ 75 words.</p>
+        </div>
+
+        <p>The sentence <code>"Hello, how are you?"</code> breaks into 6 tokens:</p>
+
+        <table class="article-table">
+          <thead><tr><th>Text piece</th><th>Token count</th></tr></thead>
+          <tbody>
+            <tr><td><code>Hello</code></td><td>1</td></tr>
+            <tr><td><code>,</code></td><td>1</td></tr>
+            <tr><td><code> how</code> (space included)</td><td>1</td></tr>
+            <tr><td><code> are</code></td><td>1</td></tr>
+            <tr><td><code> you</code></td><td>1</td></tr>
+            <tr><td><code>?</code></td><td>1</td></tr>
+          </tbody>
+        </table>
+
+        <h2>How tokenization works — BPE</h2>
+        <p>Most modern LLMs use <strong>Byte Pair Encoding (BPE)</strong>, originally invented for data compression. During training it builds a vocabulary by iteratively merging the most frequent adjacent character pairs:</p>
+
+        <ol>
+          <li>Start with every character as its own token: <code>['h','e','l','l','o']</code></li>
+          <li>Count all adjacent pairs across the training corpus</li>
+          <li>Merge the most frequent pair into a new token</li>
+          <li>Repeat millions of times until vocabulary size is reached (32k–100k tokens)</li>
+        </ol>
+
+        <pre><code>Iteration 1: 'e','r'  appear 50,000× → merge → 'er'
+Iteration 2: 'er','s' appear 40,000× → merge → 'ers'
+Iteration 3: 't','h'  appear 35,000× → merge → 'th'
+...continuing until vocabulary is full</code></pre>
+
+        <h2>Vocabulary sizes across models</h2>
+        <table class="article-table">
+          <thead><tr><th>Model</th><th>Vocabulary size</th><th>Algorithm</th></tr></thead>
+          <tbody>
+            <tr><td>GPT-2</td><td>50,257</td><td>BPE</td></tr>
+            <tr><td>GPT-3 / GPT-4</td><td>100,277</td><td>BPE (cl100k)</td></tr>
+            <tr><td>Claude</td><td>~100,000</td><td>BPE variant</td></tr>
+            <tr><td>LLaMA 3</td><td>128,256</td><td>BPE</td></tr>
+            <tr><td>BERT</td><td>30,522</td><td>WordPiece</td></tr>
+          </tbody>
+        </table>
+
+        <h2>Tokenization in practice</h2>
+
+        <h3>Common words = 1 token</h3>
+        <pre><code>"the"      → [the]       = 1 token
+"running"  → [running]   = 1 token
+"Python"   → [Python]    = 1 token</code></pre>
+
+        <h3>Rare or long words = multiple tokens</h3>
+        <pre><code>"cryptocurrency" → [crypto][currency]    = 2 tokens
+"tokenization"   → [token][ization]      = 2 tokens
+"unbelievable"   → [un][believ][able]    = 3 tokens</code></pre>
+
+        <h3>Numbers are expensive</h3>
+        <pre><code>"2024"     → [2024]          = 1 token  (memorised as common year)
+"19847362" → [198][47][362] = 3 tokens
+"3.14159"  → [3][.][14][159]= 4 tokens</code></pre>
+
+        <h3>Whitespace is part of the token</h3>
+        <pre><code>"hello"  → [hello]   ← token ID 15339
+" hello" → [ hello]  ← token ID 23748  (completely different!)</code></pre>
+        <p>The leading space is encoded into the token itself. This is why prompt formatting matters.</p>
+
+        <h2>Languages are NOT equal in token cost</h2>
+        <p>English is the most efficient because BPE was trained primarily on English text. For the same meaning, other languages require significantly more tokens:</p>
+
+        <table class="article-table">
+          <thead><tr><th>Language</th><th>Phrase</th><th>Approx. tokens</th></tr></thead>
+          <tbody>
+            <tr><td>English</td><td>"I love artificial intelligence"</td><td>~5</td></tr>
+            <tr><td>French</td><td>"J'aime l'intelligence artificielle"</td><td>~8</td></tr>
+            <tr><td>Bulgarian</td><td>"Обичам изкуствения интелект"</td><td>~12</td></tr>
+            <tr><td>Arabic</td><td>"أحب الذكاء الاصطناعي"</td><td>~10</td></tr>
+            <tr><td>Chinese</td><td>"我爱人工智能"</td><td>~7</td></tr>
+          </tbody>
+        </table>
+
+        <p>Cyrillic characters are split into more sub-pieces because they appear less in training data. Prompting in Bulgarian costs <strong>roughly 2–3× more tokens</strong> than the equivalent English prompt.</p>
+
+        <h2>Context windows — your token budget</h2>
+        <p>Every model has a <strong>context window</strong> — the maximum total tokens (input + output) it can process at once. Exceeding it causes truncation or errors.</p>
+
+        <table class="article-table">
+          <thead><tr><th>Model</th><th>Context window</th><th>Approx. words</th></tr></thead>
+          <tbody>
+            <tr><td>GPT-3.5</td><td>16,385 tokens</td><td>~12,000</td></tr>
+            <tr><td>GPT-4</td><td>128,000 tokens</td><td>~96,000</td></tr>
+            <tr><td>Claude 3.5 Sonnet</td><td>200,000 tokens</td><td>~150,000</td></tr>
+            <tr><td>Gemini 1.5 Pro</td><td>1,000,000 tokens</td><td>~750,000</td></tr>
+          </tbody>
+        </table>
+
+        <h2>How tokens affect API cost</h2>
+        <p>APIs charge per token. Output tokens (the model's generated response) are always more expensive than input tokens because they are generated sequentially.</p>
+
+        <pre><code># Example — Claude Sonnet pricing
+Input tokens:  $3.00 per 1M tokens
+Output tokens: $15.00 per 1M tokens
+
+Your message: "Explain tokenization in detail" = ~6 tokens
+Model response: ~2,000 tokens
+
+Cost = (6 × $0.000003) + (2,000 × $0.000015)
+     = $0.000018 + $0.030
+     ≈ $0.03 per call</code></pre>
+
+        <h2>How generation works — one token at a time</h2>
+        <p>The model doesn't generate a full sentence at once. It predicts <strong>one token at a time</strong>, each time using all previous tokens as context:</p>
+
+        <pre><code>Input:  "The capital of France is"
+Step 1: predict → " Paris"   (probability: 94%)
+Step 2: predict → "."        (probability: 78%)
+Step 3: predict → " It"      (probability: 45%)
+...</code></pre>
+
+        <p>At each step, the model outputs a probability distribution over its entire vocabulary (~100,000 options). Which token is chosen depends on the <strong>sampling strategy</strong>:</p>
+
+        <table class="article-table">
+          <thead><tr><th>Strategy</th><th>How it works</th><th>Effect</th></tr></thead>
+          <tbody>
+            <tr><td>Greedy (temp=0)</td><td>Always pick highest probability</td><td>Deterministic, repetitive</td></tr>
+            <tr><td>Temperature &gt; 1</td><td>Flatten probabilities</td><td>More random, creative</td></tr>
+            <tr><td>Temperature &lt; 1</td><td>Sharpen probabilities</td><td>Focused, conservative</td></tr>
+            <tr><td>Top-p (nucleus)</td><td>Sample from tokens totalling p%</td><td>Most used in production</td></tr>
+          </tbody>
+        </table>
+
+        <div class="article-callout">
+          <p><strong>Temperature = 0</strong> → always identical output (useful for deterministic test assertions). <strong>Temperature = 1</strong> → natural variation. Most production systems use 0.2–0.8.</p>
+        </div>
+
+        <h2>Tokenization quirks that affect QA</h2>
+
+        <h3>Why LLMs struggle with arithmetic</h3>
+        <p>The number <code>9.11</code> is tokenized as <code>[9][.][11]</code> — a sequence of text characters, not a decimal value. The model has no numeric understanding, which is why LLMs systematically fail at precise arithmetic without a calculator tool.</p>
+
+        <h3>Capitalization creates different tokens</h3>
+        <pre><code>"Python"  → token ID 37474 = 1 token
+"python"  → token ID 29356 = 1 token  (completely different ID!)
+"PYTHON"  → [PY][THON]    = 2 tokens</code></pre>
+
+        <h3>Code is more efficient than prose</h3>
+        <pre><code>def add(a, b):          # ~10 tokens
+    return a + b
+
+"Write a Python function that takes two numbers as
+parameters and returns their sum"  # ~22 tokens</code></pre>
+        <p>This is why including code examples in prompts is often more token-efficient than explaining in prose.</p>
+
+        <h2>Tools to count tokens</h2>
+
+        <pre><code># Python — exact GPT-4 tokenization
+pip install tiktoken
+
+import tiktoken
+enc = tiktoken.get_encoding('cl100k_base')
+text = "Hello, how are you?"
+tokens = enc.encode(text)
+print(f"Count: {len(tokens)}")   # → 6
+print(f"IDs:   {tokens}")        # → [15339, 11, 1268, 527, 499, 30]</code></pre>
+
+        <p>Online tools: <strong>platform.openai.com/tokenizer</strong> and <strong>tiktokenizer.vercel.app</strong> visualize tokenization with color-coding per token.</p>
+
+        <h2>Key takeaways for QA &amp; AI engineers</h2>
+        <ul>
+          <li>Token count = cost + context limit — always estimate before building AI features</li>
+          <li>Non-English content costs 2–3× more tokens — plan your budget accordingly</li>
+          <li>Output tokens are 3–5× more expensive than input tokens</li>
+          <li>Temperature 0 gives reproducible responses — important for consistent test assertions against AI outputs</li>
+          <li>LLMs cannot reliably count, sort, or do arithmetic — these are inherent tokenization limitations</li>
+          <li>Large codebases or long conversation histories consume context quickly — chunk them appropriately</li>
+        </ul>
+
+      </div>
+
+      <div class="article-footer">
+        <a href="../index.html#articles" class="article-nav-back">← Back to Tech Insights</a>
+        <span class="mono" style="font-size:0.75rem;color:var(--muted);">Stanimir Dimitrov · 2026</span>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+    });
+  </script>
+
+</body>
+</html>
