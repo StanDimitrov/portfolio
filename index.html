@@ -20,7 +20,7 @@
     <ul class="nav-links">
       <li><a href="#about" data-i18n="nav_about">About</a></li>
       <li><a href="#skills" data-i18n="nav_skills">Skills</a></li>
-      <li><a href="#services" data-i18n="nav_services">Services</a></li>
+      <li><a href="#experience" data-i18n="nav_experience">Experience</a></li>
       <li><a href="#projects" data-i18n="nav_projects">Projects</a></li>
       <li><a href="#contact" class="btn-nav" data-i18n="nav_contact">Contact</a></li>
     </ul>
@@ -48,6 +48,7 @@
       <div class="hero-cta">
         <a href="#projects" class="btn btn-primary" data-i18n="hero_cta_work">View My Work</a>
         <a href="#contact" class="btn btn-outline" data-i18n="hero_cta_contact">Get In Touch</a>
+        <a href="assets/Stanimir_Dimitrov_CV.pdf" download class="btn btn-cv" data-i18n="download_cv">↓ CV</a>
       </div>
     </div>
     <div class="hero-terminal" aria-hidden="true">
@@ -67,6 +68,28 @@
         &nbsp;&nbsp;}<br/><br/>
         <span class="t-comment"># All tests passing ✓</span><br/>
         <span class="cursor">█</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── STATS ───────────────────────────────────────────── -->
+  <section id="stats">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-number" data-i18n="stats_years">5+</span>
+        <span class="stat-label" data-i18n="stats_years_label">Years Experience</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-i18n="stats_industries">3</span>
+        <span class="stat-label" data-i18n="stats_industries_label">Industries</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-i18n="stats_certs">11</span>
+        <span class="stat-label" data-i18n="stats_certs_label">Certifications</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-i18n="stats_protocols">2</span>
+        <span class="stat-label" data-i18n="stats_protocols_label">OCPP Versions</span>
       </div>
     </div>
   </section>
@@ -186,10 +209,52 @@
     </div>
   </section>
 
+  <!-- ─── EXPERIENCE ─────────────────────────────────────── -->
+  <section id="experience">
+    <div class="section-inner">
+      <h2 class="section-title"><span class="accent mono">03.</span> <span data-i18n="exp_title">Experience</span></h2>
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-date mono accent">2023 — Present</div>
+          <div class="timeline-role">Software Test Engineer (transverse)</div>
+          <div class="timeline-company">Total Energies Charging Services · Paris</div>
+          <p class="timeline-desc">EV charging management platform (B2B, B2C, B2G). Global test strategy with Shift-Left approach, API &amp; UI automation frameworks integrated in CI/CD via GitHub Actions, OCPP 1.6 &amp; 2.0.1 / OCPI protocol validation, Websocket monitoring, payment flow certification (Mangopay, Fiserv) and Kibana log analysis.</p>
+          <ul class="timeline-tags"><li>Python</li><li>Playwright</li><li>GitHub Actions</li><li>OCPP/OCPI</li><li>Kibana</li></ul>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date mono accent">2022 — 2023</div>
+          <div class="timeline-role">Software Test Engineer</div>
+          <div class="timeline-company">Ecole en ligne Ivan Vazov</div>
+          <p class="timeline-desc">QA and corrective maintenance of an e-learning SaaS platform. Non-regression testing (TNR) and test plan management.</p>
+          <ul class="timeline-tags"><li>Selenium</li><li>Jira</li><li>TestRail</li></ul>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date mono accent">2020 — 2021</div>
+          <div class="timeline-role">Software Test Engineer &amp; Help Desk Analyst</div>
+          <div class="timeline-company">GSK (BioNTech USA)</div>
+          <p class="timeline-desc">Software validation in a highly regulated pharmaceutical environment (GxP). Anomaly tracking via ServiceNow, validation documentation for audits, critical application compliance and cloud maintenance.</p>
+          <ul class="timeline-tags"><li>GxP</li><li>ServiceNow</li><li>Jira</li><li>Cloud</li></ul>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-date mono accent">2016 — 2018</div>
+          <div class="timeline-role">Adjoint responsable parc informatique</div>
+          <div class="timeline-company">Bibliothèque Goutte d'Or · Paris</div>
+          <p class="timeline-desc">IT infrastructure management and database administration.</p>
+          <ul class="timeline-tags"><li>IT Management</li><li>Databases</li></ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ─── SERVICES ───────────────────────────────────────── -->
   <section id="services">
     <div class="section-inner">
-      <h2 class="section-title"><span class="accent mono">03.</span> <span data-i18n="services_title">Services</span></h2>
+      <h2 class="section-title"><span class="accent mono">04.</span> <span data-i18n="services_title">Services</span></h2>
       <div class="services-grid">
 
         <div class="service-card">
@@ -237,7 +302,7 @@
   <!-- ─── PROJECTS ───────────────────────────────────────── -->
   <section id="projects">
     <div class="section-inner">
-      <h2 class="section-title"><span class="accent mono">04.</span> <span data-i18n="projects_title">Projects</span></h2>
+      <h2 class="section-title"><span class="accent mono">05.</span> <span data-i18n="projects_title">Projects</span></h2>
       <div class="projects-grid">
 
         <!-- NDA Project 1 -->
@@ -308,7 +373,99 @@
     </div>
   </section>
 
-  <!-- ─── CONTACT ────────────────────────────────────────── -->
+  <!-- ─── CERTIFICATIONS ──────────────────────────────────── -->
+  <section id="certifications">
+    <div class="section-inner">
+      <h2 class="section-title"><span class="accent mono">06.</span> <span data-i18n="certs_title">Certifications</span></h2>
+      <div class="certs-grid">
+        <div class="cert-badge"><span class="cert-year">2022</span> STM Software Testing Master</div>
+        <div class="cert-badge"><span class="cert-year">2023</span> SDET — Software Dev in Test</div>
+        <div class="cert-badge"><span class="cert-year">2023</span> OCPP 1.6</div>
+        <div class="cert-badge"><span class="cert-year">2023</span> OCPP 2.0.1</div>
+        <div class="cert-badge"><span class="cert-year">2024</span> TypeScript</div>
+        <div class="cert-badge"><span class="cert-year">2024</span> JavaScript</div>
+        <div class="cert-badge"><span class="cert-year">2024</span> Selenium WebDriver</div>
+        <div class="cert-badge"><span class="cert-year">2024</span> UI &amp; REST API Automation</div>
+        <div class="cert-badge"><span class="cert-year">2025</span> API &amp; Web Services</div>
+        <div class="cert-badge"><span class="cert-year">2025</span> Business Strategy</div>
+        <div class="cert-badge"><span class="cert-year">2026</span> AWS</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── AI &amp; AUTOMATION ───────────────────────────────── -->
+  <section id="ai-automation">
+    <div class="section-inner">
+      <h2 class="section-title"><span class="accent mono">07.</span> <span data-i18n="ai_title">AI &amp; Automation</span></h2>
+      <div class="ai-grid">
+        <div class="ai-text">
+          <p class="ai-tagline" data-i18n="ai_desc">Beyond traditional automation, I integrate AI tools into the testing workflow — from AI-assisted test generation to MCP server orchestration and prompt engineering for test scenarios. Staying ahead of the curve in AI-powered QA.</p>
+          <div class="ai-tools">
+            <span class="ai-tool">Claude API</span>
+            <span class="ai-tool">MCP Servers</span>
+            <span class="ai-tool">AI Test Generation</span>
+            <span class="ai-tool">Prompt Engineering</span>
+            <span class="ai-tool">LLM Evaluation</span>
+            <span class="ai-tool">GitHub Copilot</span>
+          </div>
+        </div>
+        <div class="ai-visual">
+          <div class="hero-terminal">
+            <div class="terminal-header">
+              <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+              <span class="terminal-title">ai_testing.py</span>
+            </div>
+            <div class="terminal-body mono">
+              <span class="t-comment"># AI-powered test generation</span><br/>
+              <span class="t-keyword">from</span> <span class="t-fn">anthropic</span> <span class="t-keyword">import</span> Anthropic<br/><br/>
+              client = Anthropic()<br/><br/>
+              <span class="t-keyword">def</span> <span class="t-fn">generate_tests</span>(spec):<br/>
+              &nbsp;&nbsp;response = client.messages.create(<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;model=<span class="t-str">"claude-opus-4"</span>,<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;messages=[{<span class="t-str">"role"</span>: <span class="t-str">"user"</span>,<br/>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="t-str">"content"</span>: spec}]<br/>
+              &nbsp;&nbsp;)<br/>
+              &nbsp;&nbsp;<span class="t-keyword">return</span> response.content<br/>
+              <span class="cursor">█</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── TECH ARTICLES ─────────────────────────────────────── -->
+  <section id="articles">
+    <div class="section-inner">
+      <h2 class="section-title"><span class="accent mono">08.</span> <span data-i18n="articles_title">Tech Insights</span></h2>
+      <div class="articles-grid">
+
+        <div class="article-card">
+          <span class="article-tag" data-i18n="article1_tag">AI &amp; ML</span>
+          <h3 class="article-title" data-i18n="article1_title">AI Tokens — How LLMs Process Text</h3>
+          <p class="article-desc" data-i18n="article1_desc">Deep dive into BPE tokenization, embedding spaces, context windows, and how language models generate text one token at a time.</p>
+          <span class="article-read-more">→ <span data-i18n="coming_soon">Coming soon</span></span>
+        </div>
+
+        <div class="article-card">
+          <span class="article-tag" data-i18n="article2_tag">Protocol Testing</span>
+          <h3 class="article-title" data-i18n="article2_title">OCPP — Testing EV Charging Standards</h3>
+          <p class="article-desc" data-i18n="article2_desc">Validating OCPP 1.6 &amp; 2.0.1 bidirectional Websocket flows for EV charging infrastructure interoperability and roaming (OCPI).</p>
+          <span class="article-read-more">→ <span data-i18n="coming_soon">Coming soon</span></span>
+        </div>
+
+        <div class="article-card">
+          <span class="article-tag" data-i18n="article3_tag">QA Strategy</span>
+          <h3 class="article-title" data-i18n="article3_title">Shift-Left Testing in SAFe Environments</h3>
+          <p class="article-desc" data-i18n="article3_desc">Integrating quality assurance from the design phase with PO/Dev collaboration using Agile and SAFe methodologies to reduce bug escape rate.</p>
+          <span class="article-read-more">→ <span data-i18n="coming_soon">Coming soon</span></span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ──────────────────────────────────────────── -->
   <section id="contact">
     <div class="section-inner contact-inner">
       <p class="contact-overline mono accent" data-i18n="contact_overline">05. What's Next?</p>
