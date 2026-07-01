@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stanimir Dimitrov — Software Test Engineer | onepoint</title>
+  <title>FR_CV_Stanimir_DIMITROV_07026 | onepoint</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
@@ -64,7 +64,7 @@
       margin-bottom: 8mm;
     }
 
-    /* onepoint logo */
+    /* Photo profile */
     .op-logo {
       width: 22mm;
       height: 22mm;
@@ -76,23 +76,19 @@
       justify-content: center;
       flex-shrink: 0;
       position: relative;
+      overflow: hidden;
+      padding: 0;
     }
-    .op-logo-inner {
-      width: 14mm;
-      height: 14mm;
+    .op-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
       border-radius: 50%;
-      border: 2px solid var(--white);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
+      display: block;
     }
-    .op-logo-dot {
-      width: 4mm;
-      height: 4mm;
-      border-radius: 50%;
-      background: var(--white);
-    }
+    .op-logo-inner { display: none; }
+    .op-logo-dot { display: none; }
     .op-logo-accent {
       position: absolute;
       bottom: 2.5mm;
@@ -343,14 +339,12 @@
 
     <div class="profile-top">
       <div class="op-logo">
-        <div class="op-logo-inner">
-          <div class="op-logo-dot"></div>
-        </div>
+        <img src="assets/photo.jpg" alt="Stanimir" />
         <div class="op-logo-accent"></div>
       </div>
       <div class="profile-text">
-        <div class="profile-role">Software Test<br>Engineer</div>
-        <div class="profile-name">Stanimir Dimitrov</div>
+        <div class="profile-role">Consultant QA<br>&amp; Automatisation</div>
+        <div class="profile-name">Stanimir</div>
         <div class="profile-years">5+ ans d'expériences</div>
       </div>
     </div>
@@ -366,18 +360,18 @@
     </div>
 
     <div class="tags">
-      <span class="tag">Selenium • Playwright • Cypress</span>
-      <span class="tag">Python • TypeScript</span>
-      <span class="tag">OCPP 1.6 &amp; 2.0.1</span>
-      <span class="tag">OCPI • Websockets</span>
-      <span class="tag">GitHub Actions • CI/CD</span>
+      <span class="tag">Stratégie de test</span>
+      <span class="tag">Automatisation UI &amp; API</span>
+      <span class="tag">Tests API</span>
+      <span class="tag">Tests de performances</span>
+      <span class="tag">Gestion de référentiel</span>
+      <span class="tag">Shift-Left</span>
       <span class="tag">BDD • Gherkin • TDD</span>
+      <span class="tag">CI/CD Pipeline</span>
       <span class="tag">SAFe • Agile</span>
-      <span class="tag">REST • SOAP</span>
-      <span class="tag">Jira • Xray</span>
-      <span class="tag">Kibana • Elasticsearch</span>
-      <span class="tag">AWS • Azure</span>
-      <span class="tag">Docker</span>
+      <span class="tag">Tests de protocoles</span>
+      <span class="tag">Observabilité</span>
+      <span class="tag">Référent technique</span>
     </div>
 
     <div class="bottom-grid">
@@ -409,8 +403,10 @@
         <div class="left-section-title">Compétences</div>
         <div class="left-item">Selenium, Playwright, Cypress, k6</div>
         <div class="left-item">Python, TypeScript, JavaScript, SQL</div>
+        <div class="left-item">Jira, Xray, Postman/Newman, TestRail</div>
         <div class="left-item">GitHub Actions, Docker, AWS, Azure</div>
-        <div class="left-item">JIRA, Xray, TestRail, Kibana</div>
+        <div class="left-item">Kibana, Elasticsearch, REST, SOAP</div>
+        <div class="left-item">OCPP 1.6 &amp; 2.0.1, OCPI, Websockets</div>
       </div>
 
     </div>
@@ -432,16 +428,16 @@
           <div class="exp-logo-accent"></div>
         </div>
         <div class="exp-content">
-          <div class="exp-role">Software Test Engineer (transverse)</div>
+          <div class="exp-role">Consultant QA &amp; Automatisation (transverse)</div>
           <div class="exp-meta">
             <span>Total Energies Charging Services</span> •
             Paris (France) • De 01/2023 à aujourd'hui — 2 ans 6 mois
           </div>
           <div class="exp-desc">
-            Stratégie de test globale et collaboration Shift-Left avec les PO/Devs dès la phase de conception.
-            Développement de frameworks d'automatisation API &amp; IHM (Selenium, Playwright) intégrés en CI/CD
-            via GitHub Actions. Validation des protocoles OCPP 1.6 &amp; 2.0.1 et OCPI pour la recharge EV.
-            Tests Websockets, certification des flux de paiement (Mangopay, Fiserv), analyses de logs Kibana.
+            <em>Plateforme de gestion de recharges pour véhicules électriques (EV) — SaaS B2B, B2C, B2G.</em><br/>
+            Stratégie de test globale, Shift-Left avec les PO/Devs dès la conception. Frameworks d'automatisation
+            API &amp; IHM intégrés en CI/CD (GitHub Actions). Validation OCPP 1.6 &amp; 2.0.1 / OCPI, tests
+            Websockets, certification paiement (Mangopay, Fiserv), observabilité Kibana/Elasticsearch.
           </div>
         </div>
       </div>
@@ -453,14 +449,15 @@
           <div class="exp-logo-accent"></div>
         </div>
         <div class="exp-content">
-          <div class="exp-role">Software Test Engineer</div>
+          <div class="exp-role">Consultant Testing</div>
           <div class="exp-meta">
             <span>Ecole en ligne Ivan Vazov</span> •
-            Paris (France) • De 01/2022 à 12/2023 — 1 an
+            Paris (France) • De 06/2022 à 12/2023 — 1 an 6 mois
           </div>
           <div class="exp-desc">
-            Assurance qualité et maintenance corrective d'une plateforme e-learning SaaS B2C.
-            Mise en place de tests de non-régression (TNR) et gestion des plans de test sous Jira/Xray.
+            <em>Plateforme e-learning SaaS — enseignement en ligne B2C.</em><br/>
+            Assurance qualité et maintenance corrective. Mise en place des tests de non-régression (TNR)
+            et gestion du référentiel de tests sous Jira/Xray.
           </div>
         </div>
       </div>
@@ -472,14 +469,14 @@
           <div class="exp-logo-accent"></div>
         </div>
         <div class="exp-content">
-          <div class="exp-role">Software Test Engineer &amp; Help Desk Analyst</div>
+          <div class="exp-role">Consultant QA / Help Desk Analyst</div>
           <div class="exp-meta">
             <span>GSK (BioNTech USA)</span> •
-            Paris (France) • De 01/2020 à 12/2021 — 1 an
+            Paris (France) • De 09/2020 à 12/2021 — 1 an 3 mois
           </div>
           <div class="exp-desc">
-            Validation logicielle dans un environnement pharmaceutique hautement réglementé (GxP).
-            Gestion des anomalies via ServiceNow, rédaction de la documentation de validation pour audits,
+            <em>Environnement pharmaceutique réglementé (GxP) — validation logicielle et conformité.</em><br/>
+            Gestion des anomalies via ServiceNow, documentation de validation pour audits,
             vérification de conformité des applications critiques (Admin Portal) et maintenance cloud.
           </div>
         </div>
@@ -492,10 +489,10 @@
           <div class="exp-logo-accent"></div>
         </div>
         <div class="exp-content">
-          <div class="exp-role">Développeur Python — Formation professionnelle</div>
+          <div class="exp-role">Développeur Python — Formation certifiante</div>
           <div class="exp-meta">
             <span>OpenClassrooms</span> •
-            Paris (France) • De 2018 à 2020 — 2 ans
+            Paris (France) • De 09/2018 à 06/2020 — 1 an 9 mois
           </div>
           <div class="exp-desc">
             Formation certifiante en développement Python (RNCP niveau 2). Projets de développement
@@ -515,7 +512,7 @@
           <div class="exp-role">Adjoint responsable parc informatique</div>
           <div class="exp-meta">
             <span>Bibliothèque Goutte d'Or — Paris 18e</span> •
-            Paris (France) • De 2016 à 2018 — 2 ans
+            Paris (France) • De 09/2016 à 06/2018 — 1 an 9 mois
           </div>
           <div class="exp-desc">
             Gestion du parc informatique (matériels, logiciels, réseaux) et des bases de données.
