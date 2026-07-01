@@ -116,6 +116,21 @@ img { display: block; max-width: 100%; }
 }
 .btn-nav:hover { background: rgba(100,255,218,0.1) !important; }
 
+.btn-cv-nav {
+  padding: 8px 18px !important;
+  border: 1px solid var(--muted) !important;
+  border-radius: var(--radius) !important;
+  color: var(--muted) !important;
+  font-size: 0.85rem;
+  font-family: 'Fira Code', monospace;
+  transition: var(--transition);
+}
+.btn-cv-nav:hover {
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+  background: rgba(100,255,218,0.06) !important;
+}
+
 .hamburger {
   display: none;
   flex-direction: column;
